@@ -54,10 +54,10 @@ viz-core = { version = "0.8.1", path = "viz-core" }
 viz-router = { version = "0.8.1", path = "viz-router" }
 viz-handlers = { version = "0.8.1", path = "viz-handlers", default-features = false }
 viz-macros = { version = "0.2.0", path = "viz-macros" }
-viz-test = { version = "0.2.0", path = "viz-test" }
-viz-tower = { version = "0.1.0", path = "viz-tower" }
+viz-test = { version = "0.2.1", path = "viz-test" }
+viz-tower = { version = "0.1.1", path = "viz-tower" }
 
-viz-smol = { version = "0.1.1", path = "viz-smol" }
+viz-smol = { version = "0.1.2", path = "viz-smol" }
 
 anyhow = "1.0"
 async-trait = "0.1"
