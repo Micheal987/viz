@@ -39,7 +39,7 @@ members = [
 ]
 
 [workspace.package]
-version = "0.8.0"
+version = "0.8.1"
 authors = ["Fangdun Tsai <cfddream@gmail.com>"]
 edition = "2021"
 homepage = "https://viz.rs"
@@ -49,10 +49,10 @@ license = "MIT"
 rust-version = "1.75"
 
 [workspace.dependencies]
-viz = { version = "0.8.0", path = "viz" }
-viz-core = { version = "0.8.0", path = "viz-core" }
-viz-router = { version = "0.8.0", path = "viz-router" }
-viz-handlers = { version = "0.8.0", path = "viz-handlers", default-features = false }
+viz = { version = "0.8.1", path = "viz" }
+viz-core = { version = "0.8.1", path = "viz-core" }
+viz-router = { version = "0.8.1", path = "viz-router" }
+viz-handlers = { version = "0.8.1", path = "viz-handlers", default-features = false }
 viz-macros = { version = "0.2.0", path = "viz-macros" }
 viz-test = { version = "0.2.0", path = "viz-test" }
 viz-tower = { version = "0.1.0", path = "viz-tower" }
@@ -83,7 +83,7 @@ http = "1"
 http-body = "1"
 http-body-util = "0.1"
 hyper = { version = "1.1", features = ["server"] }
-hyper-util = { version = "0.1.2", features = ["server-auto", "tokio"] }
+hyper-util = { version = "0.1.3", features = ["server-auto", "tokio"] }
 mime = "0.3"
 mime_guess = "2.0"
 percent-encoding = "2.3"
