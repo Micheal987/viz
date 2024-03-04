@@ -79,7 +79,7 @@ sessions-core = { workspace = true, optional = true }
 
 # CSRF
 getrandom = { version = "0.2", optional = true }
-base64 = { version = "0.21", optional = true }
+base64 = { version = "0.22", optional = true }
 
 # Compression
 async-compression = { version = "0.4", features = [
