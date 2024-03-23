@@ -140,7 +140,7 @@ impl Display for Files {
                 relative,
                 title,
                 if *kind { "file" } else { "folder" },
-                match &ext {
+                match ext {
                     Some(ext) => ext,
                     None => "",
                 },
