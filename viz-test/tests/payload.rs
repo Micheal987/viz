@@ -1,13 +1,13 @@
 use std::collections::HashMap;
 
-use viz::{types, Error, Request, RequestLimitsExt, Response, ResponseExt, Result};
+use viz::{
+    middleware::limits, types, Error, Request, RequestLimitsExt, Response, ResponseExt, Result,
+    Router, StatusCode,
+};
+use viz_test::TestServer;
 
 #[tokio::test]
 async fn payload() -> Result<()> {
-    use viz::{middleware::limits, Router};
-    use viz_test::http::StatusCode;
-    use viz_test::TestServer;
-
     let router = Router::new()
         .post("/form", |mut req: Request| async move {
             let data = req.form_with_limit::<HashMap<String, String>>().await?;

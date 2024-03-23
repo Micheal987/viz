@@ -3,18 +3,10 @@ use std::collections::{BTreeMap, HashMap};
 use headers::{authorization::Bearer, Authorization};
 use serde::{Deserialize, Serialize};
 use viz::{
-    // TODO: reqwest and hyper haven't used the same version of `http`.
-    // header::{AUTHORIZATION, CONTENT_TYPE, COOKIE, SET_COOKIE},
-    // StatusCode,
+    header::{AUTHORIZATION, COOKIE, SET_COOKIE},
     types::{self},
-    Error,
-    IntoResponse,
-    Request,
-    RequestExt,
-    RequestLimitsExt,
-    Response,
-    ResponseExt,
-    Result,
+    Error, IntoResponse, Request, RequestExt, RequestLimitsExt, Response, ResponseExt, Result,
+    Router, StatusCode,
 };
 
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
@@ -25,14 +17,7 @@ struct Page {
 #[tokio::test]
 async fn request_body() -> Result<()> {
     use futures_util::stream::TryStreamExt;
-    use viz::{
-        middleware::{cookie, limits},
-        Router,
-    };
-    use viz_test::http::{
-        header::{AUTHORIZATION, COOKIE},
-        StatusCode,
-    };
+    use viz::middleware::{cookie, limits};
     use viz_test::TestServer;
 
     let router = Router::new()
@@ -259,11 +244,7 @@ async fn request_body() -> Result<()> {
 
 #[tokio::test]
 async fn request_session() -> Result<()> {
-    use viz::{
-        middleware::{cookie, helper::CookieOptions, session},
-        Router,
-    };
-    use viz_test::http::header::{COOKIE, SET_COOKIE};
+    use viz::middleware::{cookie, helper::CookieOptions, session};
     use viz_test::{nano_id, sessions, TestServer};
 
     let router = Router::new()
