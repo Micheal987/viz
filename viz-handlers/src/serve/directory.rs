@@ -68,7 +68,7 @@ impl Directory {
                     parent
                         .file_name()
                         .and_then(OsStr::to_str)
-                        .unwrap_or("")
+                        .unwrap_or_default()
                         .to_string(),
                     false,
                     None,
@@ -107,9 +107,9 @@ impl Display for Directory {
         write!(
             f,
             include_str!("list.tpl"),
-            name = &self.name,
-            paths = &self.paths,
-            files = &self.files
+            name = self.name,
+            paths = self.paths,
+            files = self.files
         )
     }
 }
@@ -121,7 +121,7 @@ pub(crate) struct Paths(Vec<(String, String)>);
 impl Display for Paths {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         for (url, name) in &self.0 {
-            writeln!(f, r#"<a href="{}">{}</a>"#, &url, &name)?;
+            writeln!(f, r#"<a href="{url}">{name}</a>"#)?;
         }
         Ok(())
     }
@@ -137,14 +137,14 @@ impl Display for Files {
             writeln!(
                 f,
                 r#"<li><a href="/{}" title="{}" class="{} {}">{}</a></li>"#,
-                &relative,
-                &title,
+                relative,
+                title,
                 if *kind { "file" } else { "folder" },
                 match &ext {
                     Some(ext) => ext,
                     None => "",
                 },
-                &base
+                base
             )?;
         }
         Ok(())
