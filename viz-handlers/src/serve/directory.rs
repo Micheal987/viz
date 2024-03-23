@@ -133,6 +133,7 @@ pub(crate) struct Files(Vec<(String, String, bool, Option<String>, String)>);
 
 impl Display for Files {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        #[allow(clippy::unwrap_or_default)]
         for (relative, title, kind, ext, base) in &self.0 {
             writeln!(
                 f,
