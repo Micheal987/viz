@@ -3,6 +3,7 @@ use std::{borrow::Borrow, fmt::Debug, io, sync::Arc};
 use async_executor::Executor;
 use futures_lite::io::{AsyncRead, AsyncWrite};
 use hyper::rt::Timer;
+#[cfg(any(feature = "http1", feature = "http2"))]
 use hyper_util::server::conn::auto::Builder;
 use smol_hyper::rt::{FuturesIo, SmolExecutor, SmolTimer};
 
@@ -14,9 +15,9 @@ mod tcp;
 #[cfg(all(unix, feature = "unix-socket"))]
 mod unix;
 
-/// TLS
-#[cfg(any(feature = "native_tls", feature = "rustls"))]
-pub mod tls;
+// TLS
+// #[cfg(any(feature = "native-tls", feature = "rustls"))]
+// pub mod tls;
 
 /// Serve a server with smol's networking types.
 #[allow(clippy::missing_errors_doc)]
@@ -55,7 +56,9 @@ where
             let executor = executor.clone();
             async move {
                 let mut builder = Builder::new(SmolExecutor::new(AsRefExecutor(executor.borrow())));
+                #[cfg(feature = "http1")]
                 builder.http1().timer(SmolTimer::new());
+                #[cfg(feature = "http2")]
                 builder.http2().timer(SmolTimer::new());
 
                 if let Err(err) = builder.serve_connection_with_upgrades(io, responder).await {
