@@ -41,18 +41,14 @@ pub struct Server<L, S = Pending<()>> {
     builder: Builder<TokioExecutor>,
 }
 
-impl<L, S> Server<L, S> {
+impl<L> Server<L> {
     /// Starts a [`Server`] with a listener and a [`Router`].
-    pub fn new(listener: L, router: Router) -> Server<L> {
-        Self::width_builder(listener, router, Builder::new(TokioExecutor::new()))
+    pub fn new(listener: L, router: Router) -> Self {
+        Self::with_builder(listener, router, Builder::new(TokioExecutor::new()))
     }
 
     /// Starts a [`Server`] with a listener, a [`Router`] and a [`Builder`].
-    pub fn width_builder(
-        listener: L,
-        router: Router,
-        builder: Builder<TokioExecutor>,
-    ) -> Server<L> {
+    pub fn with_builder(listener: L, router: Router, builder: Builder<TokioExecutor>) -> Self {
         Server {
             listener,
             builder,
@@ -62,7 +58,7 @@ impl<L, S> Server<L, S> {
     }
 
     /// Specifies a signal for graceful shutdown.
-    pub fn signal<X>(self, signal: X) -> Server<L, X> {
+    pub fn signal<S>(self, signal: S) -> Server<L, S> {
         Server {
             signal,
             tree: self.tree,
