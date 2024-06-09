@@ -38,23 +38,35 @@ pub struct Server<L, S = Pending<()>> {
     listener: L,
     signal: S,
     tree: crate::Tree,
+    builder: Builder<TokioExecutor>,
 }
 
 impl<L, S> Server<L, S> {
     /// Starts a [`Server`] with a listener and a [`Router`].
     pub fn new(listener: L, router: Router) -> Server<L> {
+        Self::width_builder(listener, router, Builder::new(TokioExecutor::new()))
+    }
+
+    /// Starts a [`Server`] with a listener, a [`Router`] and a [`Builder`].
+    pub fn width_builder(
+        listener: L,
+        router: Router,
+        builder: Builder<TokioExecutor>,
+    ) -> Server<L> {
         Server {
             listener,
+            builder,
             signal: pending(),
             tree: router.into(),
         }
     }
 
-    /// Changes the signal for graceful shutdown.
+    /// Specifies a signal for graceful shutdown.
     pub fn signal<X>(self, signal: X) -> Server<L, X> {
         Server {
             signal,
             tree: self.tree,
+            builder: self.builder,
             listener: self.listener,
         }
     }
@@ -75,14 +87,13 @@ where
         let Self {
             tree,
             signal,
+            builder,
             listener,
         } = self;
 
-        let tree = Arc::new(tree);
-
         Box::pin(async move {
-            let server = Builder::new(TokioExecutor::new());
             let graceful = GracefulShutdown::new();
+            let tree = Arc::new(tree);
             let mut signal = pin!(signal);
 
             loop {
@@ -105,9 +116,9 @@ where
 
                         let stream = TokioIo::new(Box::pin(stream));
 
-                        let responder = Responder::<Arc<L::Addr>>::new(tree.clone(), Some(peer_addr.clone()));
+                        let responder = Responder::new(tree.clone(), Some(peer_addr.clone()));
 
-                        let conn = server.serve_connection_with_upgrades(stream, responder);
+                        let conn = builder.serve_connection_with_upgrades(stream, responder);
 
                         let conn = graceful.watch(conn.into_owned());
 
