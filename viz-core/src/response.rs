@@ -30,14 +30,14 @@ pub trait ResponseExt: private::Sealed + Sized {
     /// The response with the specified [`Content-Type`][mdn].
     ///
     /// [mdn]: <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type>
-    fn with<B>(body: B, content_type: &'static str) -> Response
+    fn with<B>(body: B, content_type: &str) -> Response
     where
         B: Into<Body>,
     {
         let mut resp = Response::new(body.into());
         resp.headers_mut().insert(
             header::CONTENT_TYPE,
-            header::HeaderValue::from_static(content_type),
+            header::HeaderValue::from_str(content_type).expect("Invalid content type"),
         );
         resp
     }
