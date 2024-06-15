@@ -69,7 +69,7 @@ pub trait Handler<Input>: Send + Sync + 'static {
 impl<F, I, Fut, O> Handler<I> for F
 where
     I: Send + 'static,
-    F: Fn(I) -> Fut + ?Sized + Clone + Send + Sync + 'static,
+    F: Fn(I) -> Fut + Clone + Send + Sync + 'static,
     Fut: ::core::future::Future<Output = O> + Send,
 {
     type Output = Fut::Output;

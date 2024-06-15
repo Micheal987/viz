@@ -11,7 +11,7 @@ use crate::{
 };
 
 /// Extracts a header from the headers of a request.
-pub struct Header<T: ?Sized>(pub T);
+pub struct Header<T>(pub T);
 
 impl<T> Header<T> {
     /// Create new `Header` instance.
@@ -29,7 +29,7 @@ impl<T> Header<T> {
 
 impl<T> Clone for Header<T>
 where
-    T: ?Sized + Clone,
+    T: Clone,
 {
     fn clone(&self) -> Self {
         Self(self.0.clone())
