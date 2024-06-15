@@ -47,7 +47,7 @@ async fn handler() -> Result<()> {
         }
     }
 
-    async fn it_works() -> Result<()> {
+    async fn it_works() {
         #[derive(thiserror::Error, Debug)]
         enum CustomError {
             #[error("not found 233")]
@@ -320,9 +320,9 @@ async fn handler() -> Result<()> {
         assert!(!y.is_empty());
 
         assert!(!v.is_empty());
-
-        Ok(())
     }
 
-    it_works().await
+    it_works().await;
+
+    Ok(())
 }
