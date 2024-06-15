@@ -4,6 +4,12 @@ use crate::{header, Body, BoxError, Bytes, Response, Result, StatusCode};
 
 /// The [`Response`] Extension.
 pub trait ResponseExt: private::Sealed + Sized {
+    /// Creates a response with an empty body.
+    #[must_use]
+    fn empty() -> Response {
+        Response::new(Body::empty())
+    }
+
     /// Get the size of this response's body.
     fn content_length(&self) -> Option<u64>;
 
@@ -20,12 +26,6 @@ pub trait ResponseExt: private::Sealed + Sized {
     ///
     /// [mdn]: <https://developer.mozilla.org/en-US/docs/Web/API/Response/ok>
     fn ok(&self) -> bool;
-
-    /// Creates a response with an empty body.
-    #[must_use]
-    fn empty() -> Response {
-        Response::new(Body::empty())
-    }
 
     /// The response with the specified [`Content-Type`][mdn].
     ///

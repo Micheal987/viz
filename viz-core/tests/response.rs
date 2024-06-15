@@ -117,6 +117,10 @@ async fn response_ext() -> Result<()> {
     let resp = Response::permanent("/oauth");
     assert_eq!(resp.status(), 308);
 
+    let resp = Response::empty();
+    let body: Body = resp.into_body();
+    assert!(body.is_end_stream());
+
     Ok(())
 }
 

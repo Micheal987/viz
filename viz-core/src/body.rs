@@ -32,10 +32,10 @@ pub enum Body<D = Bytes> {
     Empty,
     /// A body that consists of a single chunk.
     Full(Full<D>),
-    /// An incoming body.
-    Incoming(Incoming),
     /// A boxed [`Body`] trait object.
     Boxed(SyncWrapper<UnsyncBoxBody<D, Error>>),
+    /// An incoming body.
+    Incoming(Incoming),
 }
 
 impl Body {
@@ -107,8 +107,8 @@ impl HttpBody for Body {
         match self.get_mut() {
             Self::Empty => Poll::Ready(None),
             Self::Full(inner) => Pin::new(inner).poll_frame(cx).map_err(Into::into),
-            Self::Incoming(inner) => Pin::new(inner).poll_frame(cx).map_err(Into::into),
             Self::Boxed(inner) => Pin::new(inner).get_pin_mut().poll_frame(cx),
+            Self::Incoming(inner) => Pin::new(inner).poll_frame(cx).map_err(Into::into),
         }
     }
 
@@ -125,9 +125,9 @@ impl HttpBody for Body {
     #[inline]
     fn size_hint(&self) -> SizeHint {
         match self {
-            Self::Boxed(_) => SizeHint::default(),
             Self::Empty => SizeHint::with_exact(0),
             Self::Full(inner) => inner.size_hint(),
+            Self::Boxed(_) => SizeHint::default(),
             Self::Incoming(inner) => inner.size_hint(),
         }
     }
@@ -143,11 +143,11 @@ impl Stream for Body {
             Self::Full(inner) => Pin::new(inner)
                 .poll_frame(cx)
                 .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))?,
-            Self::Incoming(inner) => Pin::new(inner)
-                .poll_frame(cx)
-                .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))?,
             Self::Boxed(inner) => Pin::new(inner)
                 .get_pin_mut()
+                .poll_frame(cx)
+                .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))?,
+            Self::Incoming(inner) => Pin::new(inner)
                 .poll_frame(cx)
                 .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))?,
         } {
@@ -161,8 +161,8 @@ impl Stream for Body {
     fn size_hint(&self) -> (usize, Option<usize>) {
         let sh = match self {
             Self::Empty => return (0, Some(0)),
-            Self::Boxed(_) => return (0, None),
             Self::Full(inner) => inner.size_hint(),
+            Self::Boxed(_) => return (0, None),
             Self::Incoming(inner) => inner.size_hint(),
         };
         (
