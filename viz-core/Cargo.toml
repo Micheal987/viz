@@ -69,9 +69,9 @@ hyper-util.workspace = true
 hyper.workspace = true
 mime.workspace = true
 
-rfc7239 = "0.1"                                                               # realip
-cookie = { version = "0.18", features = ["percent-encode"], optional = true }
-form-data = { version = "0.5.5", optional = true }
+rfc7239.workspace = true
+cookie = { workspace = true, optional = true }
+form-data = { workspace = true, optional = true }
 serde = { workspace = true, features = ["derive"], optional = true }
 serde_json = { workspace = true, optional = true }
 serde_urlencoded = { workspace = true, optional = true }
