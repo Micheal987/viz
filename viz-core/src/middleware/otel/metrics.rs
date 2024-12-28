@@ -40,25 +40,25 @@ impl Config {
                 "Measures the number of concurrent HTTP requests that are currently in-flight.",
             )
             .with_unit("{request}")
-            .init();
+            .build();
 
         let duration = meter
             .f64_histogram(HTTP_SERVER_DURATION)
             .with_description("Measures the duration of inbound HTTP requests.")
             .with_unit("s")
-            .init();
+            .build();
 
         let request_size = meter
             .u64_histogram(HTTP_SERVER_REQUEST_SIZE)
             .with_description("Measures the size of HTTP request messages (compressed).")
             .with_unit("By")
-            .init();
+            .build();
 
         let response_size = meter
             .u64_histogram(HTTP_SERVER_RESPONSE_SIZE)
             .with_description("Measures the size of HTTP request messages (compressed).")
             .with_unit("By")
-            .init();
+            .build();
 
         Self {
             active_requests,

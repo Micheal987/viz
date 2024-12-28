@@ -28,7 +28,7 @@ async fn ws(mut req: Request) -> Result<impl IntoResponse> {
 
         tokio::task::spawn(async move {
             while let Ok(msg) = rx.recv().await {
-                if ws_tx.send(Message::Text(msg)).await.is_err() {
+                if ws_tx.send(Message::Text(msg.into())).await.is_err() {
                     break;
                 }
             }

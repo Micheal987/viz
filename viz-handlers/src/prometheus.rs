@@ -3,7 +3,7 @@
 //! [OTEL]: https://docs.rs/opentelemetry-prometheus
 
 use http_body_util::Full;
-use opentelemetry::{global::handle_error, metrics::MetricsError};
+use opentelemetry::otel_error;
 use prometheus::{Encoder, TextEncoder};
 
 use viz_core::{
@@ -40,9 +40,10 @@ impl Handler<Request> for Prometheus {
         let mut body = Vec::new();
 
         if let Err(err) = encoder.encode(&metric_families, &mut body) {
+            let error = StatusCode::INTERNAL_SERVER_ERROR;
             let text = err.to_string();
-            handle_error(MetricsError::Other(text.clone()));
-            Err((StatusCode::INTERNAL_SERVER_ERROR, text).into_error())?;
+            otel_error!(name: "prometheus_encode_failure", error_code = error.as_u16(), error = text.clone());
+            Err((error, text).into_error())?;
         }
 
         let mut res = Response::new(Full::from(body).into());

@@ -9,7 +9,7 @@ use opentelemetry::{
     trace::{
         FutureExt as OtelFutureExt, Span, SpanKind, Status, TraceContextExt, Tracer, TracerProvider,
     },
-    Context, KeyValue,
+    Context, InstrumentationScope, KeyValue,
 };
 use opentelemetry_semantic_conventions::trace::{
     CLIENT_ADDRESS, EXCEPTION_MESSAGE, HTTP_REQUEST_METHOD, HTTP_RESPONSE_STATUS_CODE, HTTP_ROUTE,
@@ -81,12 +81,10 @@ where
 
         let http_route = &req.route_info().pattern;
         let attributes = build_attributes(&req, http_route.as_str());
-
-        let tracer = self
-            .tracer
-            .tracer_builder(self.name.clone())
+        let scope = InstrumentationScope::builder(self.name.clone())
             .with_attributes(attributes)
             .build();
+        let tracer = self.tracer.tracer_with_scope(scope);
         let mut span = tracer.build_with_context(
             tracer
                 .span_builder(format!("{} {}", req.method(), http_route))

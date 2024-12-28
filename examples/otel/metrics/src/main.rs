@@ -2,10 +2,7 @@ use std::net::SocketAddr;
 use tokio::net::TcpListener;
 
 use opentelemetry::{global, KeyValue};
-use opentelemetry_sdk::{
-    metrics::{self, Aggregation, Instrument, MeterProviderBuilder, Stream},
-    Resource,
-};
+use opentelemetry_sdk::{metrics::MeterProviderBuilder, Resource};
 
 use viz::{
     handlers::prometheus::{ExporterBuilder, Prometheus, Registry},
@@ -24,29 +21,13 @@ async fn main() -> Result<()> {
     println!("listening on http://{addr}");
 
     let registry = Registry::new();
-    let (exporter, controller) = {
-        (
-            ExporterBuilder::default()
-                .with_registry(registry.clone())
-                .build()
-                .map_err(Error::boxed)?,
-            metrics::new_view(
-                Instrument::new().name("http.server.duration"),
-                Stream::new().aggregation(Aggregation::ExplicitBucketHistogram {
-                    boundaries: vec![
-                        0.0, 0.005, 0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1.0, 2.5, 5.0,
-                        7.5, 10.0,
-                    ],
-                    record_min_max: true,
-                }),
-            )
-            .unwrap(),
-        )
-    };
+    let exporter = ExporterBuilder::default()
+        .with_registry(registry.clone())
+        .build()
+        .map_err(Error::boxed)?;
     let provider = MeterProviderBuilder::default()
         .with_reader(exporter)
         .with_resource(Resource::new([KeyValue::new("service.name", "viz")]))
-        .with_view(controller)
         .build();
 
     global::set_meter_provider(provider.clone());
@@ -61,9 +42,9 @@ async fn main() -> Result<()> {
         println!("{e}");
     }
 
-    Ok(())
-
     // Ensure all spans have been reported
-    // global::shutdown_tracer_provider();
-    // provider.shutdown();
+    global::shutdown_tracer_provider();
+    provider.shutdown().map_err(Error::boxed)?;
+
+    Ok(())
 }

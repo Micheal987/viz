@@ -30,7 +30,7 @@ embed = ["dep:hex", "dep:mime_guess", "dep:http-body-util", "dep:rust-embed"]
 
 prometheus = [
   "dep:http-body-util",
-  "opentelemetry/metrics",
+  "opentelemetry/internal-logs",
   "dep:opentelemetry-prometheus",
   "dep:prometheus"
 ]
