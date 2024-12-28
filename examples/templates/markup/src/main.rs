@@ -1,4 +1,5 @@
 #![allow(clippy::must_use_candidate)]
+#![allow(clippy::needless_lifetimes)]
 #![allow(clippy::inherent_to_string_shadow_display)]
 
 use std::net::SocketAddr;
