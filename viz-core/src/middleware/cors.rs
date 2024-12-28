@@ -230,7 +230,7 @@ where
             // Preflight request
             if req
                 .header(ACCESS_CONTROL_REQUEST_METHOD)
-                .map_or(false, |method| {
+                .is_some_and(|method| {
                     self.config.allow_methods.is_empty()
                         || self.config.allow_methods.contains(&method)
                 })
