@@ -89,7 +89,7 @@ where
             if req
                 .headers()
                 .get(IF_NONE_MATCH)
-                .map_or(false, |etag| etag.to_str().unwrap_or("000000").eq(&hash))
+                .is_some_and(|etag| etag.to_str().unwrap_or("000000").eq(&hash))
             {
                 Err(StatusCode::NOT_MODIFIED.into_error())?;
             }

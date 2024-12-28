@@ -24,7 +24,7 @@ impl Directory {
         base: &str,
         prev: bool,
         root: &Path,
-        unlisted: &Option<Vec<&'static str>>,
+        unlisted: Option<&Vec<&'static str>>,
     ) -> Option<Self> {
         let mut entries = read_dir(root).ok()?;
 

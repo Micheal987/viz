@@ -131,7 +131,7 @@ impl Handler<Request> for Dir {
         }
 
         if self.listing {
-            return Directory::new(req.path(), prev, &path, &self.unlisted)
+            return Directory::new(req.path(), prev, &path, self.unlisted.as_ref())
                 .ok_or_else(|| StatusCode::INTERNAL_SERVER_ERROR.into_error())
                 .map(IntoResponse::into_response);
         }
