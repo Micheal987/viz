@@ -71,14 +71,12 @@ pub trait ResponseExt: private::Sealed + Sized {
         use bytes::{BufMut, BytesMut};
 
         let mut buf = BytesMut::with_capacity(128).writer();
-        serde_json::to_writer(&mut buf, &body)
-            .map(|()| {
-                Response::with(
-                    Full::new(buf.into_inner().freeze()),
-                    mime::APPLICATION_JSON.as_ref(),
-                )
-            })
-            .map_err(crate::types::PayloadError::Json)
+        serde_json::to_writer(&mut buf, &body).map_err(crate::types::PayloadError::Json)?;
+
+        Ok(Response::with(
+            Full::new(buf.into_inner().freeze()),
+            mime::APPLICATION_JSON.as_ref(),
+        ))
     }
 
     /// Responds to a stream.
