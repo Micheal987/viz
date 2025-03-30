@@ -250,7 +250,7 @@ fn serve(path: &Path, headers: &HeaderMap) -> Result<Response> {
     if let Some(content_range) = content_range {
         headers.typed_insert(content_range);
         *res.status_mut() = StatusCode::PARTIAL_CONTENT;
-    };
+    }
 
     Ok(res)
 }
