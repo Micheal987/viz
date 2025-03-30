@@ -238,7 +238,7 @@ where
 /// TODO
 pub fn secret() -> Result<Vec<u8>> {
     let mut buf = [0u8; 32];
-    getrandom::getrandom(&mut buf)
+    getrandom::fill(&mut buf)
         .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()).into_error())?;
     Ok(buf.to_vec())
 }
