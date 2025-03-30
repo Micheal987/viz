@@ -124,7 +124,7 @@ where
                             .map(ToString::to_string)
                             .unwrap_or_default(),
                     ));
-                };
+                }
                 span.end();
                 Ok(resp)
             }
