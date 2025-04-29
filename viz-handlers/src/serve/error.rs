@@ -1,7 +1,7 @@
 use viz_core::{IntoResponse, Response, StatusCode, ThisError};
 
 /// Static file serving Error.
-#[derive(ThisError, Debug)]
+#[derive(Debug, ThisError)]
 pub enum Error {
     /// Method Not Allowed
     #[error("method not allowed")]

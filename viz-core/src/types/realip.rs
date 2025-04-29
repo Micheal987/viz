@@ -11,7 +11,7 @@ use crate::{
 };
 
 /// Gets real ip remote addr from request headers.
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub struct RealIp(pub IpAddr);
 
 impl RealIp {

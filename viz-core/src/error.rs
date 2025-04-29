@@ -6,7 +6,7 @@ use crate::{IntoResponse, Response, StatusCode, ThisError};
 pub type BoxError = Box<dyn StdError + Send + Sync>;
 
 /// Represents errors that can occur handling application.
-#[derive(ThisError, Debug)]
+#[derive(Debug, ThisError)]
 pub enum Error {
     /// Receives a [`Response`] as an error.
     #[error("response")]

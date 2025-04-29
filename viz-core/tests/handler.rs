@@ -51,7 +51,7 @@ async fn handler() -> Result<()> {
     }
 
     async fn it_works() {
-        #[derive(thiserror::Error, Debug)]
+        #[derive(Debug, thiserror::Error)]
         enum CustomError {
             #[error("not found 233")]
             NotFound,
@@ -78,7 +78,7 @@ async fn handler() -> Result<()> {
             }
         }
 
-        #[derive(thiserror::Error, Debug)]
+        #[derive(Debug, thiserror::Error)]
         enum CustomError2 {
             #[error("not found 377")]
             NotFound,

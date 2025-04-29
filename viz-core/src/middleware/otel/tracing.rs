@@ -56,7 +56,7 @@ where
 }
 
 /// `OpenTelemetry` tracing middleware.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct TracingMiddleware<H, T> {
     h: H,
     tracer: T,

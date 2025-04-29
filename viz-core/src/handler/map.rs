@@ -1,7 +1,7 @@
 use crate::{Handler, Result};
 
 /// Maps the `Ok` value of the output if after the handler called.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct Map<H, F> {
     h: H,
     f: F,

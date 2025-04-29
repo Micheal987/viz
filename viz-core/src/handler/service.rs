@@ -3,7 +3,7 @@ use hyper::service::Service;
 use crate::{Body, BoxError, Bytes, Error, Handler, HttpBody, Request, Response, Result};
 
 /// Converts a hyper [`Service`] to a viz [`Handler`].
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct ServiceHandler<S>(S);
 
 impl<S> ServiceHandler<S> {

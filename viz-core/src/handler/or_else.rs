@@ -1,7 +1,7 @@
 use crate::{Error, Handler, Result};
 
 /// Calls `op` if the output is `Err`, otherwise returns the `Ok` value of the output.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct OrElse<H, F> {
     h: H,
     f: F,

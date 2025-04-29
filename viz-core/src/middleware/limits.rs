@@ -6,7 +6,7 @@ use std::sync::Arc;
 use crate::{types, Handler, IntoResponse, Request, Response, Result, Transform};
 
 /// A configuration for [`LimitsMiddleware`].
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct Config {
     limits: types::Limits,
     #[cfg(feature = "multipart")]
@@ -61,7 +61,7 @@ where
 }
 
 /// Limits middleware.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct LimitsMiddleware<H> {
     h: H,
     config: Config,

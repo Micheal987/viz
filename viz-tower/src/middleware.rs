@@ -4,7 +4,7 @@ use viz_core::{Body, BoxError, Bytes, Error, Handler, HttpBody, Request, Respons
 use crate::HandlerService;
 
 /// A [`Service`] created from a [`Handler`] by applying a Tower middleware.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct Middleware<L, H> {
     l: L,
     h: H,

@@ -18,7 +18,7 @@ use crate::{
 pub(crate) use de::PathDeserializer;
 
 /// Extracts params from the path of a URL.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct Params<T = Vec<(String, String)>>(pub T);
 
 impl<T> AsRef<T> for Params<T> {
@@ -89,7 +89,7 @@ where
 }
 
 /// Rejects a parsing error.
-#[derive(ThisError, Debug)]
+#[derive(Debug, ThisError)]
 pub enum ParamsError {
     /// Represents pasing single param was failed.
     #[error("{}", .0)]

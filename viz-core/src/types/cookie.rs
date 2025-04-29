@@ -214,7 +214,7 @@ impl fmt::Debug for Cookies {
 }
 
 /// Rejects a error thats reading or parsing the cookies.
-#[derive(ThisError, Debug)]
+#[derive(Debug, ThisError)]
 pub enum CookiesError {
     /// Failed to read cookies
     #[error("failed to read cookies")]

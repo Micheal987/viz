@@ -4,7 +4,7 @@ use crate::{Handler, Result};
 pub type Next<I, H> = (I, H);
 
 /// Wraps around the remaining handler or middleware chain.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct Around<H, F> {
     h: H,
     f: F,

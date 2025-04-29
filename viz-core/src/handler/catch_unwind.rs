@@ -1,7 +1,7 @@
 use crate::{future::FutureExt, Handler, IntoResponse, Response, Result};
 
 /// Catches unwinding panics while calling the handler.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct CatchUnwind<H, F> {
     h: H,
     f: F,

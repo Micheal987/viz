@@ -7,7 +7,7 @@ use viz::{
     Body, Error, HttpBody, Response, ResponseExt, Result, StatusCode,
 };
 
-#[derive(Debug, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Deserialize, PartialEq, Serialize)]
 struct Page {
     p: u8,
 }

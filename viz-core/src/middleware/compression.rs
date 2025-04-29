@@ -100,7 +100,7 @@ impl<T: IntoResponse> IntoResponse for Compress<T> {
 /// [`ContentCoding`]
 ///
 /// [`ContentCoding`]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, Eq, PartialEq)]
 pub enum ContentCoding {
     /// gzip
     Gzip,

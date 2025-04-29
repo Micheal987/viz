@@ -1,7 +1,7 @@
 use crate::{Handler, Result};
 
 /// Maps the input before the handler calls.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct Before<H, F> {
     h: H,
     f: F,

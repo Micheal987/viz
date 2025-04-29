@@ -1,7 +1,7 @@
 use crate::Handler;
 
 /// Combines two different handlers having the same associated types into a single type.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub enum Either<L, R> {
     /// First branch of the type.
     Left(L),

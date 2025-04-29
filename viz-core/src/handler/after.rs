@@ -1,7 +1,7 @@
 use crate::{Handler, Result};
 
 /// Maps the output `Result<T>` after the handler called.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct After<H, F> {
     h: H,
     f: F,

@@ -13,7 +13,7 @@ mod layer;
 pub use layer::Layered;
 
 /// Converts a tower [`Service`] into a [`Handler`].
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct ServiceHandler<S>(S);
 
 impl<S> ServiceHandler<S> {
@@ -66,7 +66,7 @@ mod tests {
         Body, BoxHandler, Handler, HandlerExt, IntoResponse, Request, RequestExt, Response,
     };
 
-    #[derive(Clone, Default, Debug)]
+    #[derive(Clone, Debug, Default)]
     struct MyMakeRequestId {
         counter: Arc<AtomicU64>,
     }

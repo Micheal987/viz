@@ -1,7 +1,7 @@
 use crate::{Handler, Result};
 
 /// Calls `op` if the output is `Ok`, otherwise returns the `Err` value of the output.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct AndThen<H, F> {
     h: H,
     f: F,

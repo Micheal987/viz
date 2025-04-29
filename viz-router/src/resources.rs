@@ -8,7 +8,7 @@ use viz_core::{
 use crate::Route;
 
 /// A Kind for generating Resources path.
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 enum Kind {
     /// index | create
     Empty,

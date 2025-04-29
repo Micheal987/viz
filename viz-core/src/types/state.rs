@@ -11,7 +11,7 @@ use crate::{
 };
 
 /// Extracts state from the extensions of a request.
-#[derive(Debug, Clone, Copy, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct State<T: ?Sized>(pub T);
 
 impl<T> State<T> {
@@ -88,7 +88,7 @@ where
 }
 
 /// A [`State`] error.
-#[derive(ThisError, Debug)]
+#[derive(Debug, ThisError)]
 #[error("missing state type `{0}`")]
 pub struct StateError(pub &'static str);
 

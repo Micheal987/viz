@@ -32,7 +32,7 @@ fn into_error<T>(e: PoisonError<T>) -> Error {
     e.to_string().into_error()
 }
 
-#[derive(Serialize, Deserialize, ToSchema, Clone)]
+#[derive(Clone, Deserialize, Serialize, ToSchema)]
 struct Todo {
     pub id: u64,
     #[schema(example = "Buy groceries")]
@@ -40,7 +40,7 @@ struct Todo {
     pub completed: bool,
 }
 
-#[derive(Serialize, Deserialize, ToSchema)]
+#[derive(Deserialize, Serialize, ToSchema)]
 enum TodoError {
     /// Todo already exists conflict.
     #[schema(example = "Todo already exists")]

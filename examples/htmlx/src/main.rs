@@ -16,7 +16,7 @@ use viz::{
 /// In-memory todo store
 type DB = Arc<Mutex<Vec<Todo>>>;
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 struct Todo {
     pub text: String,
     pub completed: bool,

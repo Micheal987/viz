@@ -84,7 +84,7 @@ impl<H> Transform<H> for Config {
 }
 
 /// Request metrics middleware with `OpenTelemetry`.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct MetricsMiddleware<H> {
     h: H,
     active_requests: UpDownCounter<i64>,

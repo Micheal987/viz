@@ -12,7 +12,7 @@ use sync_wrapper::SyncWrapper;
 use crate::{BoxError, Error, HttpBody, Result};
 
 /// A body state.
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum BodyState {
     /// The body is inited.
     Normal,

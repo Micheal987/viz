@@ -3,7 +3,7 @@
 use crate::{Error, IntoResponse, Response, Result, StatusCode, ThisError};
 
 /// Rejects with an error when the body of request extraction fails.
-#[derive(ThisError, Debug)]
+#[derive(Debug, ThisError)]
 pub enum PayloadError {
     /// 400
     #[error("payload is empty")]

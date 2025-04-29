@@ -3,7 +3,7 @@
 use sea_orm::entity::prelude::*;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, Deserialize, Serialize)]
+#[derive(Clone, Debug, DeriveEntityModel, Deserialize, Eq, PartialEq, Serialize)]
 #[sea_orm(table_name = "todos")]
 pub struct Model {
     #[sea_orm(primary_key)]
@@ -13,7 +13,7 @@ pub struct Model {
     pub completed: bool,
 }
 
-#[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
+#[derive(Clone, Copy, Debug, DeriveRelation, EnumIter)]
 pub enum Relation {}
 
 impl ActiveModelBehavior for ActiveModel {}

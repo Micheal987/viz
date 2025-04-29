@@ -1,7 +1,7 @@
 use crate::{Error, Handler, Result};
 
 /// Maps the `Err` value of the output if after the handler called.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct MapErr<H, F> {
     h: H,
     f: F,

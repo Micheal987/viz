@@ -193,7 +193,7 @@ impl<H> Transform<H> for Config {
 }
 
 /// CORS middleware.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct CorsMiddleware<H> {
     h: H,
     config: Config,

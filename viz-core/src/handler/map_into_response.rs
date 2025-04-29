@@ -1,7 +1,7 @@
 use crate::{Handler, IntoResponse, Response, Result};
 
 /// Maps the handler's output type to the [`Response`].
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct MapInToResponse<H>(pub(crate) H);
 
 impl<H> MapInToResponse<H> {

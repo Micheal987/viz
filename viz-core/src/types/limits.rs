@@ -12,7 +12,7 @@ use super::Json;
 use super::Payload;
 
 /// Extracts the limits settings.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct Limits {
     inner: Arc<Vec<(&'static str, u64)>>,
 }

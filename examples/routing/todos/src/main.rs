@@ -21,7 +21,7 @@ fn into_error<T>(e: PoisonError<T>) -> Error {
     e.to_string().into_error()
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 struct Todo {
     pub id: u64,
     pub text: String,

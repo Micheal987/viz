@@ -33,7 +33,7 @@ pub enum Store {
 }
 
 /// Extracts CSRF token via cookie or session.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug)]
 pub struct CsrfToken(pub String);
 
 impl FromRequest for CsrfToken {
