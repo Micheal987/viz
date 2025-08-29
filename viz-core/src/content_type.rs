@@ -70,14 +70,14 @@ impl ContentType {
 
     // 转换为 HTTP 头部
     pub fn to_header(&self) -> Header {
-        Header::new(ContentTypeHeader::name(), self.0.clone())
+        Header::new("Content-Type", self.0.to_string())
     }
 }
 
 // 实现 Display 以便直接打印
 impl fmt::Display for ContentType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}: {}", ContentTypeHeader::name(), self.0)
+        write!(f, "{}: {}", "Content-Type", self.0)
     }
 }
 
@@ -85,12 +85,12 @@ impl fmt::Display for ContentType {
 #[derive(Debug, Clone)]
 pub struct Header {
     pub name: &'static str,
-    pub value: Mime,
+    pub value: String,
 }
 
 impl Header {
-    pub fn new(name: &'static str, value: Mime) -> Self {
-        Self { name, value }
+    pub fn new<T: Into<String>>(name: &'static str, value: T) -> Self {
+        Self { name, value: value.into() }
     }
 }
 
@@ -119,7 +119,7 @@ macro_rules! standard_headers {
                 }
 
                 // 字符串版本的 with_value
-                pub fn with_value<T: Into<Mime>>(value: T) -> Header {
+                pub fn with_value<T: Into<String>>(value: T) -> Header {
                     Header::new(Self::name(), value.into())
                 }
 
@@ -139,8 +139,12 @@ macro_rules! standard_headers {
 
 // 为 Authorization 添加常用方法
 impl Authorization {
-    pub fn bearer() -> Header {
-        Header::new("authorization", mime::STAR_STAR)
+    pub fn bearer<T: Into<String>>(token: T) -> Header {
+        Header::new("authorization", format!("Bearer {}", token.into()))
+    }
+
+    pub fn basic<T: Into<String>>(credentials: T) -> Header {
+        Header::new("authorization", format!("Basic {}", credentials.into()))
     }
 }
 
