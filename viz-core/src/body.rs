@@ -179,6 +179,8 @@ impl<D> From<UnsyncBoxBody<D, Error>> for Body<D> {
         Self::Boxed(SyncWrapper::new(value))
     }
 }
+//These are just experimental
+// new Type
 impl Body {
     /// Creates a `Body` from a serializable value by converting it to JSON.
     ///
@@ -235,6 +237,7 @@ impl Body {
     }
 }
 
+//These are just experimental
 // new Type
 impl From<Bytes> for Body {
     fn from(bytes: Bytes) -> Self {

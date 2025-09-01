@@ -60,8 +60,6 @@ pub use hyper::body::{ Body as HttpBody, Incoming };
 pub use hyper_util::rt::TokioIo as Io;
 pub use thiserror::Error as ThisError;
 
-//ContentType
-pub mod content_type;
 #[doc(hidden)]
 mod tuples {
     use super::{ Error, FnExt, FromRequest, Future, IntoResponse, Request, Result };
